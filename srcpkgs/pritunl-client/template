@@ -2,7 +2,7 @@
 pkgname=pritunl-client
 version=1.0.1632.81
 revision=1
-build_style=python-module
+build_style=python2-module
 pycompile_module="pritunl-client"
 make_install_args="--no-upstart --no-systemd"
 hostmakedepends="python-setuptools"
