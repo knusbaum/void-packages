@@ -1,0 +1,19 @@
+pkgname=kubernetes-helm
+version=v2.9.1
+revision=1
+build_style=fetch
+depends=""
+short_desc="The Kubernetes Package Manager"
+maintainer="Kyle Nusbaum <knusbaum+void@sdf.org>"
+license="Apache-2.0"
+homepage="https://helm.sh/"
+distfiles="https://storage.googleapis.com/kubernetes-helm/helm-${version}-linux-amd64.tar.gz"
+checksum=56ae2d5d08c68d6e7400d462d6ed10c929effac929fedce18d2636a9b4e166ba
+only_for_archs="x86_64"
+conflicts="helm"
+
+do_install() {
+    tar -xvzf "helm-${version}-linux-amd64.tar.gz"
+    vbin linux-amd64/helm
+    vlicense linux-amd64/LICENSE
+}
