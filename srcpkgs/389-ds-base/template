@@ -1,0 +1,33 @@
+pkgname=389-ds-base
+version=1.4.0.13
+revision=1
+hostmakedepends="make automake libtool doxygen rsync"
+makedepends="libltdl-devel pam-devel libldap-devel icu-devel net-snmp-devel mit-krb5-devel pcre-devel nspr-devel nss-devel libevent-devel libnl-devel pciutils-devel"
+build_style=gnu-configure
+short_desc="The enterprise-class Open Source LDAP server for Linux."
+maintainer="Kyle Nusbaum <knusbaum+void@sdf.org>"
+license="MIT"
+homepage="http://directory.fedoraproject.org/"
+distfiles="https://releases.pagure.org/389-ds-base/389-ds-base-${version}.tar.bz2"
+checksum=f2530f52fbb467e839612fcbe5bbcc33f5e538fa7249c66f8a55153ef01fb505
+
+pre_configure() {
+	export CXXFLAGS="-I/usr/include/nspr -I/usr/include/nss"
+	export CFLAGS="-I/usr/include/nspr -I/usr/include/nss"
+	export LDFLAGS="-levent -levent_openssl "
+	autoreconf -fiv -B /usr/include/nspr/
+}
+
+#do_configure() {
+#	CXXFLAGS="-I/usr/include/nspr -I/usr/include/nss" CFLAGS="-I/usr/include/nspr -I/usr/include/nss" LDFLAGS="-levent -levent_openssl " ./configure
+#}
+
+389-ds-base-devel_package() {
+	depends="389-ds-base>=${version}_${revision}"
+	short_desc+=" - development files"
+	pkg_install() {
+		vmove usr/include
+		vmove usr/lib/pkgconfig
+		vmove "usr/lib/*.so"
+	}
+}
