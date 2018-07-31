@@ -1,7 +1,8 @@
 pkgname=freeipa
 version=4.7.0
 revision=1
-hostmakedepends="nspr-devel pkg-config nss-devel mit-krb5-devel python popt-devel xmlrpc-c-devel ding-libs-devel"
+hostmakedepends="pkg-config python"
+makedepends="nspr-devel nss-devel mit-krb5-devel popt-devel xmlrpc-c-devel ding-libs-devel 389-ds-base-devel sssd-devel talloc-devel tevent-devel mit-krb5-devel samba-devel"
 short_desc="An integrated Identity and Authentication solution for Linux/UNIX networked environments."
 build_style="gnu-configure"
 maintainer="Kyle Nusbaum <knusbaum+void@sdf.org>"
