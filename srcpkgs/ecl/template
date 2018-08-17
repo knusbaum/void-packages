@@ -16,7 +16,7 @@ checksum=76a585c616e8fa83a6b7209325a309da5bc0ca68e0658f396f49955638111254
 if [ "$CROSS_BUILD" ]; then
 	# Depend on system ecl
 	hostmakedepends+=" ecl"
-	configure_args+=" --with-cross-config=/void-packages/srcpkgs/ecl/files/${XBPS_TARGET_MACHINE}.conf"
+	configure_args+=" --with-cross-config=${XBPS_SRCPKGDIR}/ecl/files/${XBPS_TARGET_MACHINE}.conf"
 fi
 
 post_install() {
