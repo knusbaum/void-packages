@@ -1,0 +1,30 @@
+# Template file for 'kafka'
+pkgname=kafka
+version=2.0.0
+revision=1
+wrksrc=kafka-${version}-src
+hostmakedepends="gradle"
+short_desc="A distributed streaming platform"
+maintainer="Kyle Nusbaum <knusbaum+void@sdf.org>"
+license="Apache-2.0"
+homepage="https://kafka.apache.org"
+distfiles="http://mirror.cc.columbia.edu/pub/software/apache/kafka/${version}/kafka-${version}-src.tgz"
+checksum=6d4ec484b26b82929508d440b428f71fbeb5cfc4a46991bb967777ef56b13afc
+_scala_version=2.11
+
+do_build() {
+	gradle
+	./gradlew clean
+	./gradlew -PscalaVersion=${_scala_version} releaseTarGz
+}
+
+do_install () {
+	vmkdir /opt
+	vmkdir /usr/bin
+	kafka_name=kafka_${_scala_version}-${version}
+	tar -xvf core/build/distributions/${kafka_name}.tgz -C ${DESTDIR}/opt/
+	for i in ${DESTDIR}/opt/${kafka_name}/bin/*; do
+		file=$(basename $i)
+		ln -s /opt/${kafka_name}/bin/${file} ${DESTDIR}/usr/bin/${file}
+	done
+}

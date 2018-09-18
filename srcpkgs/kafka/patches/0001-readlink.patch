@@ -1,0 +1,28 @@
+From 49880a21fd09a5d3a6b2a437a9efb17e369daecf Mon Sep 17 00:00:00 2001
+From: Kyle Nusbaum <knusbaum+void@sdf.org>
+Date: Tue, 18 Sep 2018 13:18:34 -0500
+Subject: [PATCH] Use readlink to resolve the script path in
+ bin/kafka-run-class.sh so that symlinks to the file will execute as expected.
+
+
+diff --git bin/kafka-run-class.sh bin/kafka-run-class.sh
+index eed39557f..6b8ba6c16 100755
+--- bin/kafka-run-class.sh
++++ bin/kafka-run-class.sh
+@@ -45,7 +45,12 @@ should_include_file() {
+   fi
+ }
+ 
+-base_dir=$(dirname $0)/..
++origfile=$0
++realfile=$(readlink $0)
++if [ -n "$realfile" ]; then
++    origfile=$realfile
++fi;
++base_dir=$(dirname $origfile)/..
+ 
+ if [ -z "$SCALA_VERSION" ]; then
+   SCALA_VERSION=2.11.12
+-- 
+2.19.0
+
