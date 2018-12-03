@@ -1,0 +1,30 @@
+# Template file for 'python-humanize'
+pkgname=python-humanize
+version=0.5.1
+revision=1
+noarch=yes
+wrksrc="humanize-${version}"
+build_style=python-module
+pycompile_module="humanize"
+hostmakedepends="python-setuptools python3-setuptools"
+depends="python"
+short_desc="Python humanize functions (Python2)"
+maintainer="Kyle Nusbaum <KyleJNusbaum@gmail.com>"
+license="MIT"
+homepage="https://github.com/jmoiron/humanize"
+distfiles="https://github.com/jmoiron/humanize/archive/${version}.tar.gz"
+checksum=e3f3ac75e647f75eec48c3950385ab7585c1c1cde2a6c1479c1f58e055a3e868
+
+post_install() {
+	vlicense LICENSE
+}
+
+python3-humanize_package() {
+	noarch=yes
+	pycompile_module="humanize"
+	depends="python3"
+	short_desc="${short_desc/Python2/Python3}"
+	pkg_install() {
+		vmove "usr/lib/python3*"
+	}
+}
