@@ -1,0 +1,31 @@
+# Template file for 'python-pytoml'
+pkgname=python-pytoml
+version=0.1.20
+revision=1
+noarch=yes
+wrksrc="pytoml-${version}"
+build_style=python-module
+pycompile_module="pytoml"
+hostmakedepends="python-setuptools python3-setuptools"
+depends="python"
+short_desc="A TOML-0.4.0 parser/writer for Python (Python2)"
+maintainer="Kyle Nusbaum <knusbaum+void@sdf.org>"
+license="MIT-0"
+homepage="https://github.com/avakar/pytoml"
+distfiles="https://github.com/avakar/pytoml/archive/v${version}.tar.gz"
+checksum=03e7da2521b976a0dfa71ed4c44c4fb55a6c7ff4d10881ec84a4365e88d31496
+
+post_install() {
+	vlicense LICENSE
+}
+
+python3-pytoml_package() {
+	noarch=yes
+	pycompile_module="pytoml"
+	depends="python3"
+	short_desc="${short_desc/Python2/Python3}"
+	pkg_install() {
+		vmove usr/lib/python3*
+		vlicense LICENSE
+	}
+}
