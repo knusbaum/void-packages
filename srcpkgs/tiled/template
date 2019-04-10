@@ -1,0 +1,28 @@
+# Template file for 'tiled'
+pkgname=tiled
+version=1.2.3
+revision=1
+#wrksrc=
+#create_wrksrc=yes
+#only_for_archs="i686 x86_64"
+build_style=qmake
+configure_args="PREFIX=/usr/"
+make_build_args="-j15"
+make_build_target=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="qt5-qmake"
+makedepends="qt5-devel qt5-tools-devel"
+depends=""
+short_desc="general purpose tile map editor for all tile-based games"
+maintainer="Kyle Nusbaum <knusbaum+void@sdf.org>"
+license="GPL-2.0-or-later"
+homepage="http://www.mapeditor.org"
+distfiles="https://github.com/bjorn/tiled/archive/v${version}.tar.gz"
+checksum=4d12cb3d867524dafb19eaee57f505ecfd826d8975fb6f737f1692dd6ac5c003
+
+do_build() {
+    make ${makejobs} ${make_build_args} ${make_build_target} \
+        CC="$CC" CXX="$CXX"
+}
