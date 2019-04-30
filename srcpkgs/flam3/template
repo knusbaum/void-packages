@@ -1,0 +1,34 @@
+# Template file for 'flam3'
+pkgname=flam3
+version=3.1.1
+revision=3
+#wrksrc=
+#create_wrksrc=yes
+#only_for_archs="i686 x86_64"
+build_style=gnu-configure
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="base-devel libpng-devel libxml2-devel libjpeg-turbo-devel"
+makedepends="zlib-devel"
+depends=""
+short_desc="original fractal flame renderer and genetic language"
+maintainer="Kyle Nusbaum <kylenusbaum@granular.ag>"
+license="GPL-3.0"
+homepage="https://flam3.com/"
+distfiles="https://github.com/scottdraves/flam3/archive/v${version}.tar.gz"
+checksum=afcd4af13897740e34f6ae1f3061bbfbda9c1dd5df3ecc9f57141c985d35d19d
+
+kbuild=true
+
+flam3-devel_package() {
+	short_desc+=" - development files"
+	depends="${sourcepkg}>=${version}_${revision}"
+	pkg_install() {
+		vmove usr/include
+		vmove "usr/lib/*.a"
+		vmove usr/lib/pkgconfig
+	}
+}

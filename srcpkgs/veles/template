@@ -1,0 +1,24 @@
+# Template file for 'veles'
+pkgname=veles
+version=8337899
+revision=3
+wrksrc='veles-8337899d1307cabdb3b374932a286226222ec1c2'
+#create_wrksrc=yes
+#archs="i686 x86_64"
+build_style=cmake
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="unzip"
+makedepends="qt5-devel"
+depends=""
+short_desc="New age tool for binary analysis"
+maintainer="Kyle Nusbaum <kylenusbaum@granular.ag>"
+license="Apache-2.0"
+homepage="https://codisec.com"
+distfiles="https://github.com/wapiflapi/veles/archive/8337899d1307cabdb3b374932a286226222ec1c2.zip"
+checksum=437a859d93d1420ebe73289b908e74c637ed2e598809c9a9db58adc3d5682dbc
+
+kbuild=true

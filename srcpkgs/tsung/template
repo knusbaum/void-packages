@@ -1,0 +1,24 @@
+# Template file for 'tsung'
+pkgname=tsung
+version=1.7.0
+revision=3
+#wrksrc=
+#create_wrksrc=yes
+#archs="i686 x86_64"
+build_style=gnu-configure
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="erlang"
+makedepends=""
+depends="gnuplot"
+short_desc="Tsung is a high-performance benchmark framework for various protocols including HTTP, XMPP, LDAP, etc."
+maintainer="Kyle Nusbaum <kylenusbaum@granular.ag>"
+license="GPL-2.0"
+homepage="https://www.process-one.net/en/tsung/"
+distfiles="https://github.com/processone/tsung/archive/v${version}.tar.gz"
+checksum=a258edbbaa8963527a3e0efe2bf6c598ae00eca642cfc6881dcb4610df309cc9
+
+kbuild=true

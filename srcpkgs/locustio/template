@@ -1,0 +1,32 @@
+# Template file for 'locustio'
+pkgname=locustio
+version=0.11.0
+revision=4
+#wrksrc=
+#create_wrksrc=yes
+#archs="i686 x86_64"
+build_style=python3-module
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="python3 python3-setuptools"
+makedepends=""
+depends="
+python3-requests
+python3-gevent
+python3-msgpack
+python3-Flask
+python3-six
+python3-pyzmq
+"
+short_desc="Scalable user load testing tool written in Python"
+maintainer="Kyle Nusbaum <knusbaum+void@sdf.org>"
+license="GPL-3.0-or-later"
+homepage="https://locust.io/"
+distfiles="https://files.pythonhosted.org/packages/4b/54/b79378a23dd2d6b4fbd6b35d9e1b5bae7ea77d6143f642032f98a094fce2/locustio-${version}.tar.gz"
+#distfiles="https://files.pythonhosted.org/packages/80/27/e241970edb9da6c867bffce8acede3f027fb1bb47b17baefc8680ef83db9/locustio-0.10.0.tar.gz"
+checksum=93404f831114791b0756325c53b08bff73f048eeb69688be657629feaa62b507
+
+kbuild=true

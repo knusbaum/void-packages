@@ -1,0 +1,52 @@
+# Template file for 'opensnitch'
+pkgname=opensnitch
+version=5c8f7102
+revision=3
+wrksrc="opensnitch-5c8f7102c29caf94e967f8433a68b861a4b1666f"
+#create_wrksrc=yes
+#only_for_archs="i686 x86_64"
+build_style=gnu-makefile
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="make unzip python3 python3-pip go git dep pkg-config"
+makedepends="libnetfilter_queue-devel python3-PyQt5-devel-tools python3-devel"
+depends="python3-slugify"
+short_desc="OpenSnitch is a GNU/Linux port of the Little Snitch application firewall"
+maintainer="Kyle Nusbaum <knusbaum+void@sdf.org>"
+license="GPL-3.0"
+homepage="https://opensnitch.io"
+distfiles="https://github.com/evilsocket/opensnitch/archive/5c8f7102c29caf94e967f8433a68b861a4b1666f.zip"
+checksum=f981888927b716d02304c6a1e343d2aeae5cb8420fc7f4bb5a8c62ff0d355fa1
+nopie=true
+#go_import_path="github.com/evilsocket/opensnitch"
+
+kbuild=true
+
+pre_build() {
+    python3 -m pip install --user grpcio-tools
+}
+
+do_build() {
+    mkdir -p golib
+    export GOPATH="${PWD}/golib"
+    echo $(go get github.com/evilsocket/opensnitch)
+    cd $GOPATH/src/github.com/evilsocket/opensnitch
+    make -C proto
+    make -C daemon
+
+    cd ui
+    #pip3 install -r requirements.txt
+    pyrcc5 -o opensnitch/resources_rc.py opensnitch/res/resources.qrc
+}
+
+do_install() {
+    vmkdir /etc/opensnitchd/rules
+    touch ${DESTDIR}/etc/opensnitchd/rules/.placeholder
+    vbin golib/src/github.com/evilsocket/opensnitch/daemon/opensnitchd
+
+    cd golib/src/github.com/evilsocket/opensnitch/ui
+    pip3 install --install-option="--prefix=${DESTDIR}/usr" .
+}

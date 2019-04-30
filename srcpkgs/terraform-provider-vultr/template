@@ -1,0 +1,20 @@
+# Template file for 'terraform-provider-vultr'
+pkgname=terraform-provider-vultr
+version=069b1e48af
+revision=3
+wrksrc=terraform-provider-vultr-069b1e48afe41ebbd17df0aab0f0d492c5805459
+build_style=go
+go_import_path=github.com/rgl/terraform-provider-vultr
+hostmakedepends="unzip git"
+short_desc="This is a terraform provider for the Vultr cloud"
+maintainer="Kyle Nusbaum <knusbaum+void@sdf.org>"
+license="MPL-2.0"
+homepage="https://github.com/rgl/terraform-provider-vultr"
+distfiles="https://github.com/rgl/terraform-provider-vultr/archive/069b1e48afe41ebbd17df0aab0f0d492c5805459.zip"
+checksum=59b23dfb1b34329f1f751f83796a4e7a9196841f7ec998685dbd254cae646776
+
+kbuild=true
+
+post_install() {
+	vlicense LICENSE
+}

@@ -1,0 +1,43 @@
+# Template file for 'compact-vm'
+pkgname=compact-vm
+version=6c70486750
+revision=2
+wrksrc=CVM-6c7048675008affa012acd57f5c6f676ed40a5d8
+#create_wrksrc=yes
+#archs="i686 x86_64"
+build_style=gnu-configure
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="automake autoconf libtool unzip pkg-config"
+makedepends="gc-devel libffi-devel check-devel"
+depends=""
+short_desc="Compact VM which executes a simple assembly language"
+maintainer="Kyle Nusbaum <knusbaum+void@sdf.org>"
+license="MIT"
+homepage="https://github.com/knusbaum/CVM"
+distfiles="https://github.com/knusbaum/CVM/archive/6c7048675008affa012acd57f5c6f676ed40a5d8.zip"
+checksum=20b1be6d0e3712591874ec3f6fdd885d84c9a48cef22b00be2179d9ace3b193b
+kbuild=true
+
+pre_configure() {
+	./setup.sh
+}
+
+post_install() {
+	vlicense LICENSE
+}
+
+
+compact-vm-devel_package() {
+	short_desc+=" - development files"
+	depends="${sourcepkg}>=${version}_${revision}"
+	pkg_install() {
+		vmove usr/include
+		vmove "usr/lib/*.a"
+		vmove "usr/lib/*.so"
+		vmove usr/lib/pkgconfig
+	}
+}

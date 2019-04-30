@@ -1,0 +1,33 @@
+# Template file for 'electricsheep'
+pkgname=electricsheep
+version=4949c31cfd
+revision=1
+wrksrc=electricsheep-4949c31cfdb0d4363cfa726aa3aa8325e540773f
+build_wrksrc=client_generic
+#create_wrksrc=yes
+#only_for_archs="i686 x86_64"
+build_style=gnu-configure
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="unzip base-devel"
+makedepends="wxWidgets-devel ffmpeg-devel lua-devel libcurl-devel
+libpng-devel libXrender-devel flam3-devel libgtop-devel boost-devel
+tinyxml-devel libfreeglut-devel glee"
+depends=""
+short_desc="infinite evolving crowdsourced artwork "
+maintainer="Kyle Nusbaum <knusbaum+void@sdf.org>"
+license="GPL-2"
+homepage="http://electricsheep.org"
+distfiles="https://github.com/scottdraves/electricsheep/archive/4949c31cfdb0d4363cfa726aa3aa8325e540773f.zip"
+checksum=e05270ff4441e06a969d8ad827e828c542ee875e1277c7e116b57ccdfcaf4e72
+
+pre_configure() {
+	./autogen.sh
+}
+
+do_build() {
+    make CXXFLAGS+="-DUSE_NEW_FFMPEG_API=1 -DGL_GLEXT_PROTOTYPES -lpthread"
+}
