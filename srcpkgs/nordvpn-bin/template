@@ -46,4 +46,5 @@ do_install() {
 	mv "${DESTDIR}/usr/sbin/nordvpnsd" "${DESTDIR}/usr/bin"
 	mv "${DESTDIR}/usr/sbin/nordvpnud" "${DESTDIR}/usr/bin"
 	rm -r "${DESTDIR}/usr/sbin"
+	rm -r "${DESTDIR}/usr/lib/systemd/"
 }
