@@ -1,0 +1,140 @@
+# Template file for 'spooles'
+pkgname=spooles
+version=2.2
+revision=1
+build_style=gnu-makefile
+hostmakedepends="perl"
+makedepends=""
+depends=""
+make_build_args="lib"
+short_desc="library for solving sparse real and complex linear systems of equations"
+maintainer="Kyle Nusbaum <knusbaum+void@sdf.org>"
+license="GPL-3.0-or-later"
+homepage="http://www.netlib.org/linalg/spooles/spooles.2.2.html"
+distfiles="http://www.netlib.org/linalg/spooles/spooles.${version}.tgz"
+checksum=a84559a0e987a1e423055ef4fdf3035d55b65bbe4bf915efaa1a35bef7f8c5dd
+
+do_extract() {
+	tar -xzf ${XBPS_SRCDISTDIR}/${pkgname}-${version}/spooles.${version}.tgz -C ${wrksrc}
+}
+
+do_install() {
+	vmkdir /usr/lib
+	vcopy spooles.a /usr/lib/
+	vmkdir /usr/include/spooles
+	vcopy *.h /usr/include/spooles
+
+	vmkdir /usr/include/spooles/A2
+	vcopy "A2/*.h" /usr/include/spooles/A2
+
+	vmkdir /usr/include/spooles/BKL
+	vcopy "BKL/*.h" /usr/include/spooles/BKL
+
+	vmkdir /usr/include/spooles/BPG
+	vcopy "BPG/*.h" /usr/include/spooles/BPG
+
+	vmkdir /usr/include/spooles/Chv
+	vcopy "Chv/*.h" /usr/include/spooles/Chv
+
+	vmkdir /usr/include/spooles/ChvList
+	vcopy "ChvList/*.h" /usr/include/spooles/ChvList
+
+	vmkdir /usr/include/spooles/ChvManager
+	vcopy "ChvManager/*.h" /usr/include/spooles/ChvManager
+
+	vmkdir /usr/include/spooles/Coords
+	vcopy "Coords/*.h" /usr/include/spooles/Coords
+
+	vmkdir /usr/include/spooles/DSTree
+	vcopy "DSTree/*.h" /usr/include/spooles/DSTree
+
+	vmkdir /usr/include/spooles/DV
+	vcopy "DV/*.h" /usr/include/spooles/DV
+
+	vmkdir /usr/include/spooles/DenseMtx
+	vcopy "DenseMtx/*.h" /usr/include/spooles/DenseMtx
+
+	vmkdir /usr/include/spooles/Drand
+	vcopy "Drand/*.h" /usr/include/spooles/Drand
+
+	vmkdir /usr/include/spooles/EGraph
+	vcopy "EGraph/*.h" /usr/include/spooles/EGraph
+
+	vmkdir /usr/include/spooles/ETree
+	vcopy "ETree/*.h" /usr/include/spooles/ETree
+
+	vmkdir /usr/include/spooles/FrontMtx
+	vcopy "FrontMtx/*.h" /usr/include/spooles/FrontMtx
+
+	vmkdir /usr/include/spooles/GPart
+	vcopy "GPart/*.h" /usr/include/spooles/GPart
+
+	vmkdir /usr/include/spooles/Graph
+	vcopy "Graph/*.h" /usr/include/spooles/Graph
+
+	vmkdir /usr/include/spooles/I2Ohash
+	vcopy "I2Ohash/*.h" /usr/include/spooles/I2Ohash
+
+	vmkdir /usr/include/spooles/IIheap
+	vcopy "IIheap/*.h" /usr/include/spooles/IIheap
+
+	vmkdir /usr/include/spooles/IV
+	vcopy "IV/*.h" /usr/include/spooles/IV
+
+	vmkdir /usr/include/spooles/IVL
+	vcopy "IVL/*.h" /usr/include/spooles/IVL
+
+	vmkdir /usr/include/spooles/Ideq
+	vcopy "Ideq/*.h" /usr/include/spooles/Ideq
+
+	vmkdir /usr/include/spooles/InpMtx
+	vcopy "InpMtx/*.h" /usr/include/spooles/InpMtx
+
+	vmkdir /usr/include/spooles/Lock
+	vcopy "Lock/*.h" /usr/include/spooles/Lock
+
+	vmkdir /usr/include/spooles/MSMD
+	vcopy "MSMD/*.h" /usr/include/spooles/MSMD
+
+	vmkdir /usr/include/spooles/Network
+	vcopy "Network/*.h" /usr/include/spooles/Network
+
+	vmkdir /usr/include/spooles/PatchAndGoInfo
+	vcopy "PatchAndGoInfo/*.h" /usr/include/spooles/PatchAndGoInfo
+
+	vmkdir /usr/include/spooles/Pencil
+	vcopy "Pencil/*.h" /usr/include/spooles/Pencil
+
+	vmkdir /usr/include/spooles/Perm
+	vcopy "Perm/*.h" /usr/include/spooles/Perm
+
+	vmkdir /usr/include/spooles/SemiImplMtx
+	vcopy "SemiImplMtx/*.h" /usr/include/spooles/SemiImplMtx
+
+	vmkdir /usr/include/spooles/SolveMap
+	vcopy "SolveMap/*.h" /usr/include/spooles/SolveMap
+
+	vmkdir /usr/include/spooles/SubMtx
+	vcopy "SubMtx/*.h" /usr/include/spooles/SubMtx
+
+	vmkdir /usr/include/spooles/SubMtxList
+	vcopy "SubMtxList/*.h" /usr/include/spooles/SubMtxList
+
+	vmkdir /usr/include/spooles/SubMtxManager
+	vcopy "SubMtxManager/*.h" /usr/include/spooles/SubMtxManager
+
+	vmkdir /usr/include/spooles/SymbFac
+	vcopy "SymbFac/*.h" /usr/include/spooles/SymbFac
+
+	vmkdir /usr/include/spooles/Tree
+	vcopy "Tree/*.h" /usr/include/spooles/Tree
+
+	vmkdir /usr/include/spooles/Utilities
+	vcopy "Utilities/*.h" /usr/include/spooles/Utilities
+
+	vmkdir /usr/include/spooles/ZV
+	vcopy "ZV/*.h" /usr/include/spooles/ZV
+
+	vmkdir /usr/include/spooles/misc
+	vcopy "misc/*.h" /usr/include/spooles/misc
+}

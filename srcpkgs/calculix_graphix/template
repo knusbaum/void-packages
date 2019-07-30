@@ -1,0 +1,23 @@
+# Template file for 'calculix_graphix'
+pkgname=calculix_graphix
+version=2.15
+revision=1
+wrksrc="CalculiX/cgx_${version}/src"
+build_style=gnu-makefile
+hostmakedepends=""
+makedepends="glu-devel MesaLib-devel libX11-devel libXmu-devel libXi-devel"
+depends=""
+short_desc="Three-Dimensional Structural Finite Element Program"
+maintainer="Kyle Nusbaum <knusbaum+void@sdf.org>"
+license="GPL-2.0"
+homepage="http://www.dhondt.de/"
+distfiles="http://www.dhondt.de/cgx_${version}.all.tar.bz2"
+checksum=86f65e111811939e0dff9cdc2b17d0d1720e34100ae099845f0deaf4761fcb98
+
+do_build() {
+	make
+}
+
+do_install() {
+	vbin cgx
+}

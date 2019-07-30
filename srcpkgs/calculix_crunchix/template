@@ -1,0 +1,23 @@
+# Template file for 'calculix_crunchix'
+pkgname=calculix_crunchix
+version=2.15
+revision=1
+wrksrc=CalculiX/ccx_${version}/src
+build_style=gnu-makefile
+hostmakedepends="gcc-fortran perl"
+makedepends="arpack-ng-devel spooles openblas-devel libgomp-devel"
+depends=""
+short_desc="Three-Dimensional Structural Finite Element Program"
+maintainer="Kyle Nusbaum <knusbaum+void@sdf.org>"
+license="GPL-2.0"
+homepage="http://www.dhondt.de"
+distfiles="http://www.dhondt.de/ccx_${version}.src.tar.bz2"
+checksum=bc7dba721935af51b60c1b5aa1529a420476fc6432a7bec5254f8dfabaeb8a34
+
+do_build() {
+    make
+}
+
+do_install() {
+	vbin ccx_2.15 ccx
+}
