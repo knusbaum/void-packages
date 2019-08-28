@@ -47,7 +47,6 @@ shlib_provides="libawt.so libawt_xawt.so libjava.so libjli.so libjvm.so libjawt.
 # Build is still parallel, but don't use -jN.
 disable_parallel_build=yes
 build_options="docs"
-build_options_default=""
 
 case "$XBPS_TARGET_LIBC" in
 	glibc) build_options_default+=" docs";;
@@ -148,7 +147,7 @@ do_configure() {
 
 post_install() {
 	vmkdir /usr/lib/jvm
-    mv ${DESTDIR}/usr/lib/jvm/openjdk-${_java_ver}.${_java_min_ver}.${_java_sec_ver}-internal ${DESTDIR}/usr/lib/jvm/openjdk-${_java_ver}
+	mv ${DESTDIR}/usr/lib/jvm/openjdk-${_java_ver}.${_java_min_ver}.${_java_sec_ver}-internal ${DESTDIR}/usr/lib/jvm/openjdk-${_java_ver}
 	rm -rf ${DESTDIR}/usr/lib/bin
 	vinstall ${FILESDIR}/mkcacerts 755 usr/lib/jvm/$_openjdk_version/bin
 	vmkdir usr/lib/jvm/$_openjdk_version/lib/security
