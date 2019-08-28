@@ -1,25 +1,43 @@
 # Template file for 'gradle'
 pkgname=gradle
-version=4.10.3
+version=5.6.1
 revision=1
 archs=noarch
-hostmakedepends="unzip"
+hostmakedepends="unzip openjdk-11 git"
 depends="virtual?java-environment"
 short_desc="Build system for Java/C/C++ software"
 maintainer="Adrian Siekierka <kontakt@asie.pl>"
 license="Apache-2.0"
 homepage="https://gradle.org/"
 changelog="https://docs.gradle.org/${version}/release-notes.html"
-distfiles="https://services.gradle.org/distributions/gradle-${version}-bin.zip"
-checksum=8626cbf206b4e201ade7b87779090690447054bc93f052954c78480fa6ed186e
+distfiles="https://github.com/gradle/gradle/archive/v${version}.tar.gz"
+checksum=0301361add63555f523a8bc44991cd6972baa7372810210b7600c8d89aaee4ca
 nocross=yes
 
-do_install() {
-	vmkdir "usr/lib/gradle"
-	vmkdir "usr/share/doc/gradle"
-	sed ${FILESDIR}/gradle -e "s;@VERSION@;${version};" > gradle
-	vbin gradle
+do_build() {
+	./gradlew installAll -Pgradle_installPath=/tmp/build
+}
 
-	cp -v getting-started.html ${DESTDIR}/usr/share/doc/gradle
-	mv lib ${DESTDIR}/usr/lib/gradle/
+do_install() {
+	vmkdir usr/lib/gradle
+	vcopy /tmp/build/lib usr/lib/gradle/
+
+	sed ${FILESDIR}/gradle -e "s;@VERSION@;${version};" > /tmp/gradle
+	vbin /tmp/gradle
+}
+
+gradle-doc_package() {
+	short_desc+=" -- documentation"
+	pkg_install() {
+		vmkdir usr/share/doc/gradle
+		vcopy /tmp/build/docs/* usr/share/doc/gradle/
+	}
+}
+
+gradle-src_package() {
+	short_desc+=" -- sources"
+	pkg_install() {
+		vmkdir usr/src/gradle
+		vcopy /tmp/build/src/* usr/src/gradle/
+	}
 }
