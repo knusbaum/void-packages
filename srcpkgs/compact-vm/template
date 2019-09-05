@@ -1,7 +1,7 @@
 # Template file for 'compact-vm'
 pkgname=compact-vm
 version=6c70486750
-revision=2
+revision=3
 wrksrc=CVM-6c7048675008affa012acd57f5c6f676ed40a5d8
 #create_wrksrc=yes
 #archs="i686 x86_64"
