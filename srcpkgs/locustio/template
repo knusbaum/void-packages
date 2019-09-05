@@ -1,7 +1,7 @@
 # Template file for 'locustio'
 pkgname=locustio
 version=0.11.0
-revision=4
+revision=5
 #wrksrc=
 #create_wrksrc=yes
 #archs="i686 x86_64"
