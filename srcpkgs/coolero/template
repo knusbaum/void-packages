@@ -1,0 +1,23 @@
+# Template file for 'coolero'
+pkgname=coolero
+version=0.11.1
+revision=1
+#archs="i686 x86_64"
+#wrksrc=
+#create_wrksrc=yes
+build_style=python3-pep517
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="python3-setuptools python3-virtualenv python3-poetry-core"
+makedepends="python3-devel libusb-devel"
+depends=""
+short_desc="A program to monitor and control your cooling devices"
+maintainer="Kyle Nusbaum <knusbaum+void@sdf.org>"
+license="GPL-3.0-or-later"
+homepage="https://gitlab.com/coolero/coolero"
+#changelog=""
+distfiles="https://gitlab.com/coolero/coolero/-/archive/${version}/coolero-${version}.tar.gz"
+checksum=7e90e62a30fe5bd4e629fb9b29b0d66e069208d280f4055cafd6eb5395561f8b
