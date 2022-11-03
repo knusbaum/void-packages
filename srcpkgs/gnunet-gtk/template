@@ -1,0 +1,28 @@
+# Template file for 'gnunet-gtk'
+pkgname=gnunet-gtk
+version=0.18.0
+revision=1
+#archs="i686 x86_64"
+#wrksrc=
+#create_wrksrc=yes
+build_style=gnu-configure
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="automake gettext-devel libtool pkg-config"
+makedepends="gnunet-devel gtk+3-devel glade3-devel libsodium-devel libxml2-devel libgcrypt-devel gnutls-devel"
+depends=""
+short_desc="GTK-based GUI for GNUnet"
+maintainer="Kyle Nusbaum <knusbaum+void@sdf.org>"
+license="GPL-3.0-or-later"
+homepage="https://gnunet.org"
+#changelog=""
+distfiles="http://ftpmirror.gnu.org/gnunet/${pkgname}-${version}.tar.gz"
+checksum=fefe7831e21129ac0d44ca8f9a1562990c04e401ad1de888a6a5e0c579a62304
+configure_args+=" --with-gnunet=/usr"
+
+pre_configure() {
+	autoreconf -fi -I /usr/include
+}
