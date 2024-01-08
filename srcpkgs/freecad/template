@@ -1,6 +1,6 @@
 # Template file for 'freecad'
 pkgname=freecad
-version=0.21.1
+version=0.21.2
 revision=1
 build_wrksrc="FreeCAD-${version}"
 build_style=cmake
@@ -18,7 +18,7 @@ configure_args="
  -DPYSIDE2RCCBINARY=/usr/bin/rcc-qt5
  -DPYSIDE2UICBINARY=/usr/bin/uic-qt5
 "
-hostmakedepends="pkg-config swig doxygen graphviz python3-setuptools"
+hostmakedepends="pkg-config swig doxygen graphviz python3-setuptools shiboken2"
 makedepends="python3-devel boost-devel libxerces-c-devel zlib-devel occt-devel
  vtk-devel hdf5-devel openmpi-devel libmed-devel eigen double-conversion-devel
  coin3-devel libshiboken2-devel libspnav-devel pyside2-tools
@@ -36,7 +36,7 @@ distfiles="
  https://github.com/FreeCAD/FreeCAD/archive/${version}.tar.gz
  ${SOURCEFORGE_SITE}/cxx/pycxx-${_pycxxver}.tar.gz
 "
-checksum="e9b1fd0323f101268c7f3be52db42e4a29222f2e306ae6c4a6fc309cb418d35a
+checksum="ceaf77cd12e8ad533d1535cc27ae4ca2a6e80778502dc9cdec906415d674b674
  4b91e1e1141c23fbd5039df635c4bb6e75632168548f56b83ce177193c0c98c6"
 python_version=3
 patch_args="-Np1 -d ${build_wrksrc}"
