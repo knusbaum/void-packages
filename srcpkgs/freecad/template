@@ -18,7 +18,7 @@ configure_args="
  -DPYSIDE2RCCBINARY=/usr/bin/rcc-qt5
  -DPYSIDE2UICBINARY=/usr/bin/uic-qt5
 "
-hostmakedepends="pkg-config swig doxygen graphviz python3-setuptools shiboken2"
+hostmakedepends="pkg-config swig doxygen graphviz python3-setuptools shiboken2 qt5-host-tools"
 makedepends="python3-devel boost-devel libxerces-c-devel zlib-devel occt-devel
  vtk-devel hdf5-devel openmpi-devel libmed-devel eigen double-conversion-devel
  coin3-devel libshiboken2-devel libspnav-devel pyside2-tools
