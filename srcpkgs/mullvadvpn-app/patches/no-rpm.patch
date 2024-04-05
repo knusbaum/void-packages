@@ -1,0 +1,14 @@
+--- a/gui/tasks/distribution.js
++++ b/gui/tasks/distribution.js
+@@ -161,10 +161,6 @@
+         target: 'deb',
+         arch: getLinuxTargetArch(),
+       },
+-      {
+-        target: 'rpm',
+-        arch: getLinuxTargetArch(),
+-      },
+     ],
+     artifactName: 'MullvadVPN-${version}_${arch}.${ext}',
+     category: 'Network',
+

@@ -1,0 +1,99 @@
+# Template file for 'mullvadvpn-app'
+pkgname=mullvadvpn-app
+version=2024.1
+revision=1
+#archs="i686 x86_64"
+#build_wrksrc=
+build_style=cargo
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="tar git pkg-config protobuf go nodejs"
+makedepends="dbus-devel libmnl-devel libnftnl-devel protobuf-devel"
+depends=""
+short_desc="The Mullvad VPN client app"
+maintainer="Kyle Nusbaum <kjn@9project.net>"
+license="GPL-3.0-or-later"
+homepage="https://mullvad.net"
+#changelog=""
+#distfiles="https://github.com/mullvad/mullvadvpn-app/archive/refs/tags/${version}.tar.gz"
+#checksum=f91bbe083711421c02cc39b4de90dedab1723441dd79e43f7d96b90736215f15
+_tag=b261238598f0237aaf420354445797a12a45d907  # tags/2024.1^0
+_commit=d5772339cee9c1a0d7671968746f02499b78e245
+#distfiles="https://github.com/mullvad/mullvadvpn-app/archive/${_tag}.tar.gz"
+#distfiles="git+https://github.com/mullvad/mullvadvpn-app.git#commit=${_tag} git+https://github.com/mullvad/mullvadvpn-app-binaries.git#commit=${_commit}?signed"
+
+#checksum=72cef17dbd1032e344be6af1a7d6e2e3baaba2ff34b5b3ed7c0e2ca5046d488e
+
+#pre_build() {
+    #echo hit
+    #exit 10
+#    git submodule update --init
+#}
+
+do_extract() {
+    git clone -b ${version} "https://github.com/mullvad/mullvadvpn-app.git" ./
+    #git clone "git+https://github.com/mullvad/mullvadvpn-app-binaries.git#commit=${_commit}?signed"
+    pushd gui
+    npm install
+    popd
+#    echo welcome to bash
+#    PS1="(debug) $$" bash
+}
+
+#pre_patch() {
+    #echo welcome to patch bash
+    #TERM=xterm PS1="(debug) $$" bash
+#}
+
+pre_build() {
+    git submodule update --init
+}
+
+do_build() {
+    OPTIMIZE=true ./build.sh
+}
+
+do_install() {
+# Install main files
+  install -d "$DESTDIR/opt/Mullvad VPN"
+  cp -r dist/linux-unpacked/* "$DESTDIR/opt/Mullvad VPN/"
+
+  chmod 4755 "$DESTDIR/opt/Mullvad VPN/chrome-sandbox"
+
+  # Install services
+  #install -Dm644 dist-assets/linux/mullvad{-daemon,-early-boot-blocking}.service -t \
+  #  "$DESTDIR/usr/lib/systemd/system/"
+
+  # Install binaries
+  install -Dm755 dist-assets/{mullvad,mullvad{-daemon,-exclude}} -t "$DESTDIR/usr/bin/"
+
+  # Link to the problem report binary
+  ln -s "/opt/Mullvad VPN/resources/mullvad-problem-report" "$DESTDIR/usr/bin/"
+
+  # Link to the GUI binary
+  #install -m755 "$srcdir/$pkgname.sh" "$DESTDIR/usr/bin/$pkgname"
+  vsv mullvad-daemon
+  
+  # Install completions
+  install -Dm644 build/shell-completions/mullvad.bash \
+    "$DESTDIR/usr/share/bash-completion/completions/mullvad"
+  install -Dm644 build/shell-completions/_mullvad -t \
+    "$DESTDIR/usr/share/zsh/site-functions/"
+  install -Dm644 build/shell-completions/mullvad.fish -t \
+    "$DESTDIR/usr/share/fish/vendor_completions.d/"
+
+  # Install desktop file & icons from deb
+  cd dist
+  ar x *.deb
+  bsdtar -xf data.tar.xz
+  install -Dm644 "usr/share/applications/mullvad-vpn.desktop" -t \
+    "$DESTDIR/usr/share/applications/"
+
+  for icon_size in 16 32 48 64 128 256 512 1024; do
+    icons_dir="usr/share/icons/hicolor/${icon_size}x${icon_size}/apps"
+    install -Dm644 "${icons_dir}/mullvad-vpn.png" -t "$DESTDIR/${icons_dir}/"
+  done
+}
