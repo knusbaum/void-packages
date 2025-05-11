@@ -1,0 +1,46 @@
+# Template file for 'shadercross'
+pkgname=shadercross
+version=6302645
+revision=4
+#archs="i686 x86_64"
+#build_wrksrc=
+build_style=cmake
+configure_args="-DSDLSHADERCROSS_DXC=ON"
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends=""
+makedepends="pkg-config SDL3-devel SPIRV-Cross" #DirectXShaderCompiler-devel DirectXShaderCompiler"
+depends=""
+short_desc="Shader translation library for SDL's GPU API"
+maintainer="Kyle Nusbaum <knusbaum+void@sdf.org>"
+license="Zlib"
+homepage="https://libsdl.org/"
+#changelog=""
+#distfiles="https://github.com/libsdl-org/SDL_shadercross/archive/63026450dedbf7d8aeee99d9086719f425b2bb4d.tgz"
+
+DXSC_NAME="linux_dxc_2025_02_20.x86_64"
+
+distfiles="https://github.com/libsdl-org/SDL_shadercross/archive/${version}.tar.gz
+https://github.com/microsoft/DirectXShaderCompiler/releases/download/v1.8.2502/${DXSC_NAME}.tar.gz"
+checksum="6c7cddf99dc0dee5dbe4a50aac1c3e8c492072d69e3ca7f8ae7544867896e8ad
+ e0580d90dbf6053a783ddd8d5153285f0606e5deaad17a7a6452f03acdf88c71"
+
+#pre_configure() {
+#	cmake -P build-scripts/download-prebuilt-DirectXShaderCompiler.cmake
+#}
+
+#export DirectXShaderCompiler_ROOT=/usr/
+
+skip_extraction="${DXSC_NAME}.tar.gz"
+
+post_extract() {
+	vsrcextract -C external/DirectXShaderCompiler-binaries/linux ${DXSC_NAME}.tar.gz
+}
+
+do_install() {
+	vinstall build/shadercross 0755 /usr/bin/
+	vinstall external/DirectXShaderCompiler-binaries/linux/lib/libdxcompiler.so 0755 /usr/lib
+	vinstall external/DirectXShaderCompiler-binaries/linux/lib/libdxil.so 0755 /usr/lib
+}

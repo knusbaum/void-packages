@@ -1,0 +1,24 @@
+# Template file for 'SPIRV-Cross'
+pkgname=SPIRV-Cross
+version=1823c11
+revision=5
+#archs="i686 x86_64"
+#build_wrksrc=
+build_style=cmake
+configure_args="-DSPIRV_CROSS_SHARED=ON"
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends=""
+makedepends=""
+depends=""
+short_desc="something something"
+maintainer="Kyle Nusbaum <kjn@9project.net>"
+license="GPL-3.0-or-later"
+homepage="https://libsdl.org/"
+#changelog=""
+distfiles="https://github.com/KhronosGroup/SPIRV-Cross/archive/1823c119c4d7311469199c1afecf2e255e26eb16.tar.gz"
+checksum=b40d976cf432f198d05fff0792f95213e2ac8927910dacffe90ba3c139d299a7
+
+
