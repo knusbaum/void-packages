@@ -16,6 +16,9 @@
 # PLEASE NOTE: when multiple packages provide the same SONAME, the first
 # one (order top->bottom) is preferred over the next ones.
 #
+libdriveio.so.0 makemkv-oss-1.18.2_1
+libmakemkv.so.1 makemkv-oss-1.18.2_1
+libmmbd.so.0 makemkv-oss-1.18.2_1
 libc.so musl1.1-1.1.24_8 armv6l-musl
 libc.so musl1.1-1.1.24_8 armv7l-musl
 libc.so musl-1.2.5_1

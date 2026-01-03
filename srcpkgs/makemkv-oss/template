@@ -1,0 +1,22 @@
+# Template file for 'makemkv-oss'
+pkgname=makemkv-oss
+version=1.18.2
+revision=1
+#archs="i686 x86_64"
+#build_wrksrc=
+build_style=gnu-configure
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="pkg-config"
+makedepends="glibc-devel openssl-devel expat-devel ffmpeg6-devel zlib-devel qt5-devel"
+depends=""
+short_desc="MakeMKV Supporting Libraries"
+maintainer="Kyle Nusbaum <kjn@9project.net>"
+license="proprietary"
+homepage="https://makemkv.com/"
+#changelog=""
+distfiles="https://www.makemkv.com/download/makemkv-oss-${version}.tar.gz"
+checksum=b9497f5555c257f5d3c7f18b6ab03c74cff3ea4437e80349d618d115bf5fa445

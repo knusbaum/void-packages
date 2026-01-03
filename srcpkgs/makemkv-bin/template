@@ -1,0 +1,22 @@
+# Template file for 'makemkv-bin'
+pkgname=makemkv-bin
+version=1.18.2
+revision=1
+#archs="i686 x86_64"
+#build_wrksrc=
+build_style=gnu-makefile
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="which less"
+#makedepends="glibc-devel libssl3 expat-devel libavcodec6 zlib-devel"
+depends="makemkv-oss"
+short_desc="MakeMKV Proprietary Application"
+maintainer="Kyle Nusbaum <kjn@9project.net>"
+license="proprietary"
+homepage="https://makemkv.com/"
+#changelog=""
+distfiles="https://www.makemkv.com/download/makemkv-bin-${version}.tar.gz"
+checksum=bfc4c7cebc0f00497671ffd56e6a34f0770a9e6af7eff2f0127efa143f28636e
