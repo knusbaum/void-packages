@@ -1,0 +1,19 @@
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -222,16 +222,6 @@
+ 
+ 
+ else ()
+-    if (NOT APPLE AND NOT FLATPAK)
+-        set(output_sos_Release "")
+-        set(output_sos_Debug "")
+-        add_custom_target(BambuStudioSosCopy ALL DEPENDS BambuStudio)
+-        if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+-            bambustudio_copy_sos(BambuStudioSosCopy "Debug" "d" output_sos_Debug)
+-        else()
+-            bambustudio_copy_sos(BambuStudioSosCopy "Release" "" output_sos_Release)
+-        endif()
+-    endif()
+     if (APPLE AND NOT CMAKE_MACOSX_BUNDLE)
+         # On OSX, the name of the binary matches the name of the Application.
+         add_custom_command(TARGET BambuStudio POST_BUILD

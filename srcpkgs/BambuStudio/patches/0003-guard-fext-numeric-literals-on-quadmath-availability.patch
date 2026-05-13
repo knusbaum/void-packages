@@ -1,0 +1,17 @@
+--- a/CMakeLists.txt	2026-05-12 18:25:41.380067436 -0500
++++ b/CMakeLists.txt	2026-05-12 18:25:53.728852378 -0500
+@@ -254,8 +254,12 @@
+ endif()
+ 
+ if (CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUXX)
+-    # Adding -fext-numeric-literals to enable GCC extensions on definitions of quad float literals, which are required by Boost.
+-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fext-numeric-literals" )
++    include(CheckIncludeFileCXX)
++    check_include_file_cxx("quadmath.h" HAVE_QUADMATH_H)
++    if (HAVE_QUADMATH_H)
++        # Adding -fext-numeric-literals to enable GCC extensions on definitions of quad float literals, which are required by Boost.
++        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fext-numeric-literals" )
++    endif()
+ endif()
+ 
+ if (NOT MSVC AND ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR "${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang"))

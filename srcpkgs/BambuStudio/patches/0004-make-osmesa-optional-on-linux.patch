@@ -1,0 +1,12 @@
+--- a/src/slic3r/CMakeLists.txt
++++ b/src/slic3r/CMakeLists.txt
+@@ -703,7 +703,8 @@
+     FIND_LIBRARY(WAYLAND_EGL_LIBRARIES    NAMES wayland-egl)
+     FIND_LIBRARY(WAYLAND_CLIENT_LIBRARIES NAMES wayland-client)
+     find_package(CURL REQUIRED)
+-    target_link_libraries(libslic3r_gui ${DBUS_LIBRARIES} OSMesa)
++    find_library(OSMESA_LIBRARY NAMES OSMesa)
++    target_link_libraries(libslic3r_gui ${DBUS_LIBRARIES} $<$<BOOL:${OSMESA_LIBRARY}>:OSMesa>)
+     target_link_libraries(libslic3r_gui
+         OpenGL::EGL
+         ${WAYLAND_SERVER_LIBRARIES}

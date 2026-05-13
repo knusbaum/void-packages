@@ -1,0 +1,14 @@
+--- a/deps/FFMPEG/FFMPEG.cmake
++++ b/deps/FFMPEG/FFMPEG.cmake
+@@ -61,8 +61,10 @@
+             ${_arch_cmd}
+             ${_cc_cmd}
+             --prefix="${DESTDIR}/usr/local"
+-            --enable-shared
++            --disable-shared
++            --enable-static
+             --disable-doc
++            --disable-programs
+             --enable-small
+             --disable-outdevs
+             --disable-filters

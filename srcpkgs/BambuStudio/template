@@ -1,0 +1,62 @@
+# Template file for 'BambuStudio'
+pkgname=BambuStudio
+version=02.06.00.51
+revision=3
+archs="x86_64"
+hostmakedepends="pkg-config cmake ninja extra-cmake-modules nasm yasm git m4"
+makedepends="gtk+3-devel libwebkit2gtk41-devel gstreamer1-devel gst-plugins-base1-devel
+ libsecret-devel dbus-devel MesaLib-devel libxkbcommon-devel eudev-libudev-devel
+ libunwind-devel libmspack-devel x264-devel wayland-devel wayland-protocols glu-devel ffmpeg-devel
+ libquadmath-devel"
+short_desc="PC Software for BambuLab and other 3D printers"
+maintainer="Kyle Nusbaum <kjn@9project.net>"
+license="AGPL-3.0-only"
+homepage="https://bambulab.com"
+distfiles="https://github.com/bambulab/BambuStudio/archive/refs/tags/v${version}.tar.gz"
+checksum=ae5d461167641b78d07f73a37ac95d4b9deb1970abc29e3cfafdc23ab7e6a2a5
+
+export CMAKE_POLICY_VERSION_MINIMUM=3.5
+
+pre_configure() {
+	cmake -S "${wrksrc}/deps" -B "${wrksrc}/deps/build" \
+		-G Ninja \
+		-DDESTDIR="${wrksrc}/deps/destdir" \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DDEP_WX_GTK3=1
+	ninja -C "${wrksrc}/deps/build"
+}
+
+do_configure() {
+	cmake -S "${wrksrc}" -B "${wrksrc}/build" \
+		-G Ninja \
+		-DCMAKE_PREFIX_PATH="${wrksrc}/deps/destdir/usr/local" \
+		-DSLIC3R_STATIC=ON \
+		-DSLIC3R_GTK=3 \
+		-DBBL_RELEASE_TO_PUBLIC=1 \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_DISABLE_PRECOMPILE_HEADERS=ON
+}
+
+do_build() {
+	ninja -C "${wrksrc}/build" BambuStudio
+}
+
+do_install() {
+	# Binary lives in /usr/lib/BambuStudio/bin/ so that ../resources
+	# resolves to /usr/lib/BambuStudio/resources/ at runtime.
+	vmkdir usr/lib/BambuStudio/bin
+	vinstall "${wrksrc}/build/src/bambu-studio" 0755 usr/lib/BambuStudio/bin BambuStudio
+	vmkdir usr/lib/BambuStudio
+	vcopy "${wrksrc}/resources" usr/lib/BambuStudio
+	# Symlink into PATH
+	vmkdir usr/bin
+	ln -sf /usr/lib/BambuStudio/bin/BambuStudio "${DESTDIR}/usr/bin/BambuStudio"
+	vinstall "${wrksrc}/src/platform/unix/BambuStudio.desktop" 0644 usr/share/applications
+	for size in 16 32 48 64 128 192; do
+		if [ -f "${wrksrc}/resources/images/BambuStudio_${size}px.png" ]; then
+			vinstall "${wrksrc}/resources/images/BambuStudio_${size}px.png" 0644 \
+				"usr/share/icons/hicolor/${size}x${size}/apps" BambuStudio.png
+		fi
+	done
+}
