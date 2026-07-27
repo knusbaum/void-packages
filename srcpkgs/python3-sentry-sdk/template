@@ -1,0 +1,19 @@
+# Template file for 'python3-sentry-sdk'
+pkgname=python3-sentry-sdk
+version=2.64.0
+revision=1
+build_style=python3-pep517
+hostmakedepends="python3-setuptools python3-wheel"
+depends="python3-urllib3 python3-certifi"
+short_desc="Python SDK for Sentry.io error tracking"
+maintainer="Kyle Nusbaum <kjn@9project.net>"
+license="MIT"
+homepage="https://github.com/getsentry/sentry-python"
+distfiles="${PYPI_SITE}/s/sentry-sdk/sentry_sdk-${version}.tar.gz"
+checksum=68be2c29e14ae310f8a39e1a79916b6d85c6cb41dcce789d14ff05fe293e4c55
+# tests require network and many optional integration frameworks
+make_check=no
+
+post_install() {
+	vlicense LICENSE
+}

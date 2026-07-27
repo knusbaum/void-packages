@@ -1,0 +1,96 @@
+diff -ruN ../apibase/proton/vpn/backend/networkmanager/killswitch/default/nmclient.py python-proton-vpn-api-core-5.2.5/proton/vpn/backend/networkmanager/killswitch/default/nmclient.py
+--- a/proton/vpn/backend/networkmanager/killswitch/default/nmclient.py	2026-07-07 20:47:48.129191577 -0500
++++ b/proton/vpn/backend/networkmanager/killswitch/default/nmclient.py	2026-07-07 21:44:41.411758568 -0500
+@@ -176,7 +176,7 @@
+         def _on_connection_added(nm_client, res, _user_data):
+             try:
+                 # Make sure exceptions creating the connection are passed to the future.
+-                nm_client.add_connection_finish(res)
++                remote_connection = nm_client.add_connection_finish(res)
+             except Exception as exc:  # pylint: disable=broad-except
+                 future_conn_activated.set_exception(
+                     RuntimeError(
+@@ -185,6 +185,22 @@
+                 )
+                 return
+ 
++            # NM does not auto-activate a user-restricted (non-permanent) kill switch
++            # connection on systems whose active session it does not track (e.g.
++            # elogind rather than systemd-logind), so the interface is never created
++            # and the future never resolves. Activate the connection explicitly.
++            nm_client.activate_connection_async(
++                remote_connection, None, None, None, _on_connection_activated, None
++            )
++
++        def _on_connection_activated(nm_client, res, _user_data):
++            try:
++                nm_client.activate_connection_finish(res)
++            except Exception as exc:  # pylint: disable=broad-except
++                # Non-fatal: a permanent (system) kill switch may already be
++                # auto-activating, in which case this errors harmlessly.
++                logger.debug(f"KS connection activation returned: {exc}")
++
+         def _add_connection_async():
+             # Set up interface connection monitoring, which resolves the future
+             # once the kill switch is active.
+@@ -222,6 +238,12 @@
+         def _on_connection_removed(connection, result, _user_data):
+             try:
+                 connection.delete_finish(result)
++                # Resolve on successful delete; the "device-removed" signal is never
++                # emitted when there is no active interface to remove, which would
++                # otherwise hang the future until it times out. See upstream issue
++                # ProtonVPN/python-proton-vpn-network-manager#7.
++                if not future_interface_removed.done():
++                    future_interface_removed.set_result(None)
+             except Exception as exc:  # pylint: disable=broad-except
+                 future_interface_removed.set_exception(
+                     RuntimeError(
+diff -ruN ../apibase/proton/vpn/backend/networkmanager/killswitch/wireguard/nmclient.py python-proton-vpn-api-core-5.2.5/proton/vpn/backend/networkmanager/killswitch/wireguard/nmclient.py
+--- a/proton/vpn/backend/networkmanager/killswitch/wireguard/nmclient.py	2026-07-07 20:47:48.129475276 -0500
++++ b/proton/vpn/backend/networkmanager/killswitch/wireguard/nmclient.py	2026-07-07 21:44:41.418024286 -0500
+@@ -182,7 +182,7 @@
+         def _on_connection_added(nm_client, res, _user_data):
+             try:
+                 # Make sure exceptions creating the connection are passed to the future.
+-                nm_client.add_connection_finish(res)
++                remote_connection = nm_client.add_connection_finish(res)
+             except Exception as exc:  # pylint: disable=broad-except
+                 future_conn_activated.set_exception(
+                     RuntimeError(
+@@ -191,6 +191,22 @@
+                 )
+                 return
+ 
++            # NM does not auto-activate a user-restricted (non-permanent) kill switch
++            # connection on systems whose active session it does not track (e.g.
++            # elogind rather than systemd-logind), so the interface is never created
++            # and the future never resolves. Activate the connection explicitly.
++            nm_client.activate_connection_async(
++                remote_connection, None, None, None, _on_connection_activated, None
++            )
++
++        def _on_connection_activated(nm_client, res, _user_data):
++            try:
++                nm_client.activate_connection_finish(res)
++            except Exception as exc:  # pylint: disable=broad-except
++                # Non-fatal: a permanent (system) kill switch may already be
++                # auto-activating, in which case this errors harmlessly.
++                logger.debug(f"KS connection activation returned: {exc}")
++
+         def _add_connection_async():
+             # Set up interface connection monitoring, which resolves the future
+             # once the kill switch is active.
+@@ -425,6 +441,12 @@
+         def _on_connection_removed(connection, result, _user_data):
+             try:
+                 connection.delete_finish(result)
++                # Resolve on successful delete; the "device-removed" signal is never
++                # emitted when there is no active interface to remove, which would
++                # otherwise hang the future until it times out. See upstream issue
++                # ProtonVPN/python-proton-vpn-network-manager#7.
++                if not future_interface_removed.done():
++                    future_interface_removed.set_result(None)
+             except Exception as exc:  # pylint: disable=broad-except
+                 future_interface_removed.set_exception(
+                     RuntimeError(

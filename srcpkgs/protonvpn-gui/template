@@ -1,0 +1,25 @@
+# Template file for 'protonvpn-gui'
+pkgname=protonvpn-gui
+version=4.16.5
+revision=3
+build_style=python3-module
+hostmakedepends="python3-setuptools"
+depends="python3-proton-vpn-api-core python3-proton-core python3-gobject
+ python3-cairo python3-dbus python3-packaging python3-distro python3-requests
+ python3-proton-vpn-network-manager
+ python3-proton-vpn-killswitch-network-manager python3-proton-keyring-linux
+ python3-proton-vpn-local-agent gtk4 libnotify libayatana-appindicator"
+short_desc="ProtonVPN Graphical User Interface"
+maintainer="Kyle Nusbaum <kjn@9project.net>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/ProtonVPN/proton-vpn-gtk-app"
+distfiles="https://github.com/ProtonVPN/proton-vpn-gtk-app/archive/refs/tags/v${version}.tar.gz"
+checksum=6d106a38befd51e045cfb8abdf4c5c8d249021038092d6a9cb1d81ad555f9ee6
+
+post_install() {
+	# Upstream ships these under rpmbuild/SOURCES (installed by the deb/rpm
+	# packaging, not setup.py); install them so the app appears in DE menus.
+	vinstall rpmbuild/SOURCES/proton.vpn.app.gtk.desktop 644 usr/share/applications
+	vinstall rpmbuild/SOURCES/proton-vpn-logo.svg 644 \
+		usr/share/icons/hicolor/scalable/apps
+}
