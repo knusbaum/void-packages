@@ -1,0 +1,21 @@
+# Template file for 'lightburn'
+pkgname=lightburn
+version=1.5.06
+revision=1
+#build_style=fetch
+short_desc="layout, editing, and control software for your laser cutter."
+maintainer="Kyle Nusbaum <void+knusbaum@sdf.org>"
+license="GPL-3.0-or-later"
+homepage="https://lightburnsoftware.com"
+distfiles="https://github.com/LightBurnSoftware/deployment/releases/download/${version}/LightBurn-Linux64-v${version}.7z"
+checksum=54931fbd91ea7605105cbc810592c45779f23f4ab389bb972e767206104183d1
+
+do_install() {
+    rm AppRun
+    vmkdir /opt/lightburn
+    vcopy * /opt/lightburn
+    vmkdir /usr/bin/
+    ln -s /opt/lightburn/LightBurn $DESTDIR/usr/bin/LightBurn
+    vmkdir /usr/share/applications/
+    vinstall "${FILESDIR}/lightburn.desktop" 644 usr/share/applications/lightburn.desktop
+}

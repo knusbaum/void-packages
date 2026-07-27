@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=LightBurn
+Comment=Software for your Laser Cutter
+Keywords=Light;Burn;Laser;Etch;Cut
+Exec=LightBurn
+Terminal=false
+Type=Application
+Icon=/opt/lightburn/LightBurn.png
+Categories=Tools;
+MimeType=application/dxf;application/postscript;image/svg+xml;application/pdf;
